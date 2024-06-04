@@ -1,3 +1,4 @@
+const con = require("../configDB/dbCon.js");
 class Persona {
   constructor(
     genero,
@@ -85,17 +86,22 @@ class Persona {
     this._email = value;
   }
 
-  mostrarInformacion() {
-    return `
-        Género: ${this._genero}
-        Fecha de Nacimiento: ${this._fecha_de_nacimiento}
-        Domicilio: ${this._domicilio}
-        DNI: ${this._dni}
-        Apellido: ${this._apellido}
-        Nombre: ${this._nombre}
-        CUIL: ${this._cuil}
-        Email: ${this._email}
-        `;
+  static get(callback) {
+    con.query("SELECT * FROM usuarios", callback);
+  }
+  static getByCuil(cuil, callback) {
+    con.query(`SELECT * FROM usuarios WHERE cuil = ${cuil}`, callback);
+  }
+  static create(data, callback) {
+    con.query(
+      `INSERT INTO persona SET nombre = "${data.nombre}",
+      apellido = "${data.apellido}", email = "${data.email}",
+      cuil = ${data.cuil}, dni = ${data.dni},
+      domicilio = '${data.domicilio}',
+      genero = '${data.genero}',
+      fecha_de_nacimiento = '${data.fecha_de_nacimiento}' `,
+      callback
+    );
   }
 }
 module.exports = Persona;

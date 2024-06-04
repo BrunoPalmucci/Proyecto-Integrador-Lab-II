@@ -1,52 +1,22 @@
 const express = require("express");
 const app = express();
-const router = express.Router();
+const path = require("path");
+
 
 app.get("/", (req, res) => {
   res.render("index.pug");
 });
 
-const mysql = require("mysql2");
+let persona = require("./routes/persona.js")
 
-let poolConnection = mysql.createPool({
-  connectionLimit: 50,
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "dbtest", //Base de datos de testeo
-});
+app.use(express.json());
 
-let con = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "dbtest",
-  port: 3306,
-});
+app.use("/persona", persona)
 
 
-//CONEXIONES
-/*poolConnection.connect(function(err){
-  if (err) throw err;
-  console.log("Conectado!")
-  let sql = ""
-})*/
 
-/*con.connect(function (err) {
-  if (err) throw err;
-  console.log("Connected!");
-  ``;
-  var sql =
-    "INSERT INTO paciente (nombre, apellido, dni) VALUES('Bruno', 'Palmucci', 45786594)";
-  poolConnection.query(sql, function (err, result) {
-    if (err) throw err;
-    console.log(
-      `${result.affectedRows} paciente${result == 1 ? "s" : ""} insertado${
-        result == 1 ? "s" : ""
-      }`
-    );
-  });
-});*/
+app.use(express.static(path.join(__dirname, 'public')));
+
 
 let port = 3000;
 app.listen(port, () => {

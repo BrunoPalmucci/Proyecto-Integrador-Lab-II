@@ -46,13 +46,7 @@ class Usuario extends Persona {
     this._password = value;
   }
 
-  mostrarInformacion() {
-    return `
-        ID Usuario: ${this._id_usuario}
-        Password: ${this._password}
-        ${super.mostrarInformacion()}
-        `;
-  }
+  
 }
 
 module.exports = Usuario;

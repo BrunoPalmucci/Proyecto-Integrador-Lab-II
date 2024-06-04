@@ -40,12 +40,7 @@ class Administrador extends Usuario {
     this._id_administrador = value;
   }
 
-  mostrarInformacion() {
-    return `
-        ID Administrador: ${this._id_administrador}
-        ${super.mostrarInformacion()}
-        `;
-  }
+  
 }
 
 module.exports = Administrador;
